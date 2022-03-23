@@ -3,6 +3,6 @@ defmodule BecariosBunsan2022B1Test do
   doctest BecariosBunsan2022B1
 
   test "greets the world" do
-    assert BecariosBunsan2022B1.hello() == :world
+    assert BecariosBunsan2022B1.hello() == "hello world"
   end
 end

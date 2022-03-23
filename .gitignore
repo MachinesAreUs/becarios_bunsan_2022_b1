@@ -24,3 +24,7 @@ becarios_bunsan_2022_b1-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# vim files
+*.swp
+*.swo

@@ -9,10 +9,12 @@ defmodule BecariosBunsan2022B1 do
   ## Examples
 
       iex> BecariosBunsan2022B1.hello()
-      :world
+      "hello world"
 
   """
   def hello do
-    :world
+    "hello world"
   end
+
+  def foo, do: :bar
 end
