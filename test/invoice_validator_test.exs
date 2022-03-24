@@ -49,6 +49,19 @@ defmodule InvoiceValidatorTest do
     end)
   end
 
+  test "Emisor datetimes exceeding 72 hrs before PAC datetimes are invalid" do
+    examples = [
+      datetime(~N[2022-03-21 09:59:59], @tz_cdmx),
+      datetime(~N[2022-03-21 08:59:59], @tz_pacific),
+      datetime(~N[2022-03-21 08:59:59], @tz_northwest),
+      datetime(~N[2022-03-21 10:59:59], @tz_southeast)
+    ]
+
+    Enum.each(examples, fn dt ->
+      assert validate_dates(dt, @pac_dt) == {:error, :before_72_hrs}
+    end)
+  end
+
   test "Emisor datetimes exactly 5 min after PAC datetimes are valid" do
     examples = [
       datetime(~N[2022-03-24 10:05:00], @tz_cdmx),

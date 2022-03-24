@@ -11,7 +11,7 @@ defmodule InvoiceValidator do
         case DateTime.compare(upper_bound_emisor_dt, pac_dt) do
           :eq -> :ok
           :gt -> :ok
-          :lt -> :error
+          :lt -> {:error, :before_72_hrs}
         end
       :gt ->
         upper_bound_emisor_dt = DateTime.add(emisor_dt, -5 * @secs_in_min, :second)
@@ -20,7 +20,6 @@ defmodule InvoiceValidator do
           :gt -> :error
           :lt -> :ok
         end
-
     end
   end
 end
