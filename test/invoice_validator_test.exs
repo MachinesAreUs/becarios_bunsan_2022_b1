@@ -6,7 +6,7 @@ defmodule InvoiceValidatorTest do
 
   @tz_cdmx "Mexico/General"
   @tz_northwest "America/Tijuana"
-  @tz_souteast "America/Cancun"
+  @tz_southeast "America/Cancun"
   @tz_pacific "America/Mazatlan"
 
   test "Emisor DateTimes equal to PAC dates are valid" do
