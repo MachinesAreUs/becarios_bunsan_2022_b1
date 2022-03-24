@@ -17,7 +17,7 @@ defmodule InvoiceValidator do
         upper_bound_emisor_dt = DateTime.add(emisor_dt, -5 * @secs_in_min, :second)
         case DateTime.compare(upper_bound_emisor_dt, pac_dt) do
           :eq -> :ok
-          :gt -> :error
+          :gt -> {:error, :after_5_min}
           :lt -> :ok
         end
     end
