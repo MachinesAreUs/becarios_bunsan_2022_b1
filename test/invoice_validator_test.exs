@@ -81,6 +81,24 @@ defmodule InvoiceValidatorTest do
     assert validate_dates(emisor_dt, pac_dt) == :ok
   end
 
+  test "Emisor datetimes less than 5 min after PAC datetimes are valid" do
+    emisor_dt = datetime(~N[2022-03-24 10:00:01], @tz_cdmx)
+    pac_dt = datetime(~N[2022-03-24 10:00:00], @tz_cdmx)
+    assert validate_dates(emisor_dt, pac_dt) == :ok
+
+    emisor_dt = datetime(~N[2022-03-24 09:00:01], @tz_pacific)
+    pac_dt = datetime(~N[2022-03-24 10:00:00], @tz_cdmx)
+    assert validate_dates(emisor_dt, pac_dt) == :ok
+
+    emisor_dt = datetime(~N[2022-03-24 09:00:01], @tz_northwest)
+    pac_dt = datetime(~N[2022-03-24 10:00:00], @tz_cdmx)
+    assert validate_dates(emisor_dt, pac_dt) == :ok
+
+    emisor_dt = datetime(~N[2022-03-24 11:00:01], @tz_southeast)
+    pac_dt = datetime(~N[2022-03-24 10:00:00], @tz_cdmx)
+    assert validate_dates(emisor_dt, pac_dt) == :ok
+  end
+
   defp datetime(%NaiveDateTime{} = ndt, tz) do
     DateTime.from_naive!(ndt, tz)
   end
