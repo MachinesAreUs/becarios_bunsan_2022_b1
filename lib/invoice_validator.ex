@@ -5,22 +5,16 @@ defmodule InvoiceValidator do
   def validate_dates(%DateTime{} = emisor_dt, %DateTime{} = pac_dt) do
     {interval, lower_bound, upper_bound} = valid_interval(pac_dt)
 
-    if emisor_dt in interval do
-      :ok
-    else
-      cond do
-        lesser_than(emisor_dt, lower_bound) -> {:error, :before_72_hrs}
-        greater_than(emisor_dt, upper_bound) -> {:error, :after_5_min}
-      end
+    if emisor_dt in interval,
+      do: :ok,
+      else: specify_error(emisor_dt, lower_bound, upper_bound)
+  end
+
+  defp specify_error(emisor_dt, lower_bound, upper_bound) do
+    cond do
+      DateTime.compare(emisor_dt, lower_bound) == :lt -> {:error, :before_72_hrs}
+      DateTime.compare(emisor_dt, upper_bound) == :gt -> {:error, :after_5_min}
     end
-  end
-
-  defp lesser_than(emisor_dt, lower_bound) do
-    DateTime.compare(emisor_dt, lower_bound) == :lt
-  end
-
-  defp greater_than(emisor_dt, upper_bound) do
-    DateTime.compare(emisor_dt, upper_bound) == :gt
   end
 
   defp valid_interval(pac_dt) do
